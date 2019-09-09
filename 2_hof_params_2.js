@@ -23,9 +23,6 @@ function saveSumOfFemaleAccounts() {
 
   // Store the result
   console.log(sum);
-
-  // debug
-  // console.log(femalePersons);
 }
 
 function loadAccounts() {
