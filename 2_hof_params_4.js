@@ -6,26 +6,31 @@ function saveSumOfFemaleAccounts() {
   let femalePersons = filter(persons, (person) => {return person.gender == 'f';});
   
   // Double Balance
-  map(femalePersons, (p) => {p.accountBalance *= 2;});
+  let doubleBalanceFemalePersons = map(femalePersons, (p) => {
+    p.accountBalance *= 2;
+    return p;
+  });
 
   // Calculate sum of the account balances
   var sum = 0;
-  for(let i=0; i < femalePersons.length; i++) {
-    sum += femalePersons[i].accountBalance;
+  for(let i=0; i < doubleBalanceFemalePersons.length; i++) {
+    sum += doubleBalanceFemalePersons[i].accountBalance;
   }
 
   // Store the result
   console.log(sum);
+}
 
-  // debug
-  // console.log(femalePersons);
+function jsonCopy(src) {
+  return JSON.parse(JSON.stringify(src));
 }
 
 function map(collection, action) {
   let colRet = [];
 
   for(let i=0; i<collection.length; i++) {
-    colRet.push(action(collection[i]));    
+    let copy = jsonCopy(collection[i]);
+    colRet.push(action(copy));
   }
 
   return colRet;
