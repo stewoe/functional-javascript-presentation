@@ -6,16 +6,16 @@ function saveSumOfFemaleAccounts() {
   let femalePersons = filter(persons, (person) => {return person.gender == 'f';});
   
   // Double Balance
-  map(femalePersons, (p) => {p.accountBalance *= 2;});
+  let doubleBalanceFemalePersons = map(femalePersons, (p) => {
+    p.accountBalance *= 2;
+    return p;
+  });
 
   // Calculate sum of the account balances
-  let sum = reduce(femalePersons, (sum, p) => { return sum + p.accountBalance; }, 0);
+  let sum = reduce(doubleBalanceFemalePersons, (sum, p) => { return sum + p.accountBalance; }, 0);
 
   // Store the result
   console.log(sum);
-
-  // debug
-  // console.log(femalePersons);
 }
 
 function reduce(collection, reducer, accumulator) {
@@ -28,11 +28,16 @@ function reduce(collection, reducer, accumulator) {
   return retVal;
 }
 
+function jsonCopy(src) {
+  return JSON.parse(JSON.stringify(src));
+}
+
 function map(collection, action) {
   let colRet = [];
 
   for(let i=0; i<collection.length; i++) {
-    colRet.push(action(collection[i]));    
+    let copy = jsonCopy(collection[i]);
+    colRet.push(action(copy));
   }
 
   return colRet;
